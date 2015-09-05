@@ -1,0 +1,71 @@
+<script type="text/javascript">
+		$(document).ready(function() {
+			// Tooltip only Text
+			$('path').hover(function(){
+				var id = $(this).attr('id');
+				
+				var name = "Recalling Name...";
+				var xmlhttp = new XMLHttpRequest(); //Make AJAX Request
+				xmlhttp.onreadystatechange = function(){ //When its ready state changes do the thing
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					name = xmlhttp.responseText; //Should get us a name
+					//add to tool tip
+					//$('<p class="tooltip"></p>').text(name).appendTo('body');
+					tipText = "Name: " + name + " ID:" + id;
+					$('#theTip').text(tipText);
+					}
+				}
+				xmlhttp.open("GET", "getInfo.php?id=" + id.substring(4), true);
+				xmlhttp.send();
+				tipText = "Name: " + name + " ID:" + id;
+				$('<p class="tooltip" id="theTip"></p>').text(name).appendTo('body').fadeIn('slow');
+				
+				var adjacentProvinces = new XMLHttpRequest();
+				adjacentProvinces.onreadystatechange = function(){
+					//console.log(id);
+					if (adjacentProvinces.readyState == 4 && adjacentProvinces.status == 200){
+						
+						//get data
+						var data = adjacentProvinces.responseText;
+						//parse data
+						var parsed = data.split(";");
+						console.log(parsed);
+						//alert(data);
+						//window.location.href = "neighborFind.php?node=" + id.substring(4) + "&map="+document.URL.split('-')[1];
+						//change color of adjacent provinces
+						for (var i = 0; i < parsed.length; i++ ){
+							console.log(parsed[i]);
+							console.log($('path#path'+parsed[i]));
+							$('path#path'+parsed[i]).css('fill','#FFFF00');
+							$('#sidebar').text(parsed[i]);
+						}
+						//Should do some local caching probably
+					}
+					
+				}
+				console.log(id.substring(4));
+				adjacentProvinces.open("GET", "neighborFind.php?node=" + id.substring(4) + "&map="+document.URL.split('-')[1]);
+				adjacentProvinces.send();
+			}, function() {
+				// Hover out code
+				//$(this).attr('title', $(this).data('tipText'));
+				$('.tooltip').remove();
+				//$(this).css("fill", 'red');
+				$('path').css("fill", '');
+		}).mousemove(function(e) {
+        var mousex = e.pageX + 20; //Get X coordinates
+        var mousey = e.pageY + 10; //Get Y coordinates
+        $('.tooltip')
+        .css({ top: mousey, left: mousex })
+});
+});
+</script>
+<script>
+	$("path").click(function() {
+		var num = $(this).attr("id").substring(4);
+		//var url = "ktr.php?content=prov"+num;
+		//var url = 
+		//window.location.href = url;
+		findNeighbor(num, document.URL.split('-')[1]);
+	});
+</script>

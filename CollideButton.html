@@ -1,0 +1,15 @@
+<div id="BadButton">
+<input type="button" value="Hold On to Your Butt" id="MyButton" >
+</div>
+<script>
+  $(document).ready(function(){
+    $('#MyButton').click(function(){
+		var totalData = "";
+       $('path').each(function(){
+		totalData = totalData.concat(collisionDetection($(this)));
+	   });
+	   console.log(totalData);
+	   submitData(totalData, document.URL.split('-')[1]);
+    });
+  });
+</script>

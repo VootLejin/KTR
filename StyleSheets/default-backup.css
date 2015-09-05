@@ -1,0 +1,48 @@
+/**********************************
+CSS attempt for World Menu; Griffs game -
+8/14/2015
+**********************************/
+#wrapper {
+	
+}
+#map-header { /* The main header will link to the other map pages and eventually show login information */
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 99%;
+	height: 10%;
+	margin: 0px auto;
+	background-color: #A7A7A7;
+	
+}
+
+#sidebar { /* Side bar will contain link to rules elements and other non-map things */
+	position: absolute;
+	top: 10%;
+	left: 0;
+	float:left;
+	width: 150px;
+	height: 85%;
+	background-color: #CBCBCB;
+}
+
+#small-map {/* The small map will allow for an over view of the full map, but smaller and without updates */
+	position: absolute;
+	top: 10%;
+	left:150px;
+	padding-left: 5px;
+	padding-top: 5px;
+}
+
+path {fill: #808080; transition: .6s fill;}
+path:hover { fill: #249}
+.tooltip {
+	display:none;
+	position:absolute;
+	border:1px solid #333;
+	background-color:#161616;
+	border-radius:5px;
+	padding:10px;
+	color:#fff;
+	font-size:12px Arial;
+}
