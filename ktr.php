@@ -27,8 +27,8 @@
   makeContent($content);
   //include ($content);
   print "</div> \n";
-  include ("InfoFloater.html");
-  include("CollideButton.html");//tears
+  include ("./Scripts/InfoFloater.html");
+  include("./Scripts/CollideButton.html");//tears
 
 	function makeContent($cont){
 		

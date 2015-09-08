@@ -4,6 +4,7 @@
 	$connection = mysql_connect("localhost","kguest","butts") or die(mysql_error);
 	mysql_select_db("ktr", $connection);
 	
+	//This all can probably be not a seperate page
 	include ("start.html");//temp
 	include ("header.html");
 	print "<div id=\"small-map\"> \n";

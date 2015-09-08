@@ -57,7 +57,7 @@ function makeMapPage($cont){
 	//Name for CSS
 	//$map .= "<h1> Drop Bears! </h1> <br>";
 	//add Map --Hope this works
-	$map = file_get_contents(strtoupper($cont).".svg");
+	$map = file_get_contents("./maps/".strtoupper($cont).".svg");
 	
 	return $map;
 	
