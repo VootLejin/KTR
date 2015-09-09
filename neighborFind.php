@@ -10,7 +10,7 @@ if (filter_has_var(INPUT_GET, "node")){
 	$map = mysql_real_escape_string(filter_input(INPUT_GET, "map"));
 	$myQ = "SELECT Node2 From ".$map." WHERE Node1=".$myNode." AND Node2 <> Node1";
 	
-	$result = mysql_query($myQ, $connection) or die('query problem'.' '.mysql_error());
+	$result = mysql_query($myQ, $connection) or die('query problem(neighborFind.php)'.' '.mysql_error());
 	$neighbors = "";
 	if(mysql_num_rows($result)<1){
 	 return "-1";

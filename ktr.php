@@ -28,8 +28,9 @@
   //include ($content);
   print "</div> \n";
   include ("./Scripts/InfoFloater.html");
-  include("./Scripts/CollideButton.html");//tears
-
+  //include("./Scripts/CollideButton.html");//tears
+	//Add after admin stuff is working
+		include("debug.html");
 	function makeContent($cont){
 		
 		//Check content type: Rules Element, province, overview, default
