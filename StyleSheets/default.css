@@ -47,6 +47,19 @@ CSS attempt for World Menu; Griffs game -
 	padding-top: 5px;
 }
 
+div#login {
+	position: absolute;
+	right: 0;
+	top: 0;
+	max-width: 125px;
+	padding-right: 5px;
+}
+
+
+#maps{
+	
+}
+
 path {fill: #808080; transition: .6s fill;
 	}
 
