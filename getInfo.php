@@ -4,7 +4,7 @@ mysql_select_db("ktr", $connection);
 if (filter_has_var(INPUT_GET, "id")){
 	$id = filter_input(INPUT_GET, "id");
 	$myQ = "SELECT Name FROM Province WHERE ProvinceID ='".$id."'";
-	$result = mysql_query($myQ, $connection) or die('query problem'.' '.mysql_error());
+	$result = mysql_query($myQ, $connection) or die('query problem(getInfo.php)'.' '.mysql_error());
 	if(mysql_num_rows($result)<1){
 		echo "Unnamed";
 	} else {

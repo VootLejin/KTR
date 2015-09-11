@@ -17,7 +17,7 @@
     $content = "default";
   } // end if
   include ("start.html");
-  include ("header.html");
+  include ("header.php");
 
   //print "<div class = \"menuPanel\"> \n";
   include ($menu);
@@ -28,8 +28,9 @@
   //include ($content);
   print "</div> \n";
   include ("./Scripts/InfoFloater.html");
-  include("./Scripts/CollideButton.html");//tears
-
+  //include("./Scripts/CollideButton.html");//tears
+	//Add after admin stuff is working
+		include("debug.html");
 	function makeContent($cont){
 		
 		//Check content type: Rules Element, province, overview, default
@@ -45,6 +46,11 @@
 			print(makeMapPage($cont));
 		} else if ($cont=="todo"){
 			include("todo.html");
+		} else if ($cont=="login"){
+			//Login
+			include ("loginPage.html");
+		} else if ($cont=="register"){
+			include ("registerPage.html");
 		} else {
 			echo "<h1> Whoops! </h1> <br>";
 			//include("aus.html");

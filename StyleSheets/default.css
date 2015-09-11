@@ -30,6 +30,14 @@ CSS attempt for World Menu; Griffs game -
 	height: 85%;
 	background-color: #CBCBCB;
 }
+#debug {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	float: right;
+	border: 2px black solid;
+	background: white;
+}
 
 #small-map {/* The small map will allow for an over view of the full map, but smaller and without updates */
 	position: absolute;
@@ -37,6 +45,19 @@ CSS attempt for World Menu; Griffs game -
 	left:150px;
 	padding-left: 5px;
 	padding-top: 5px;
+}
+
+div#login {
+	position: absolute;
+	right: 0;
+	top: 0;
+	max-width: 125px;
+	padding-right: 5px;
+}
+
+
+#maps{
+	
 }
 
 path {fill: #808080; transition: .6s fill;
