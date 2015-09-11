@@ -23,7 +23,8 @@ HERE;
 } else {
 	print <<<HERE
 	<div id="login">
-	User Name: {$_SESSION['UserName']}
+	User Name: {$_SESSION['UserName']} <hr>
+	<a href="ktr.php?content=logout"> Log Out </a>
 	</div>
 HERE;
 }
