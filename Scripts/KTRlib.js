@@ -89,7 +89,7 @@ function recordGraph( node1, node2, rec){
 	return rec;
 }
 
-function submitData(data, map){
+function submitData(datums, map){
 	var response = "";
 	/*
 	var xmlhttp = new XMLHttpRequest(); //Make AJAX Request
@@ -99,12 +99,25 @@ function submitData(data, map){
 					$('sidebar').html = response;
 					}
 				}
-				xmlhttp.open("GET", "saveMapGraph.php?data=" + data + "&map="+map, true);
+				xmlhttp.open("POST", "saveMapGraph.php?data=" + data + "&map="+map, true);
 				xmlhttp.send();
 				*/
 				
-				
-	window.location.href = "saveMapGraph.php?data=" + data.substring(0,data.length-1) + "&map="+map;
+	$.ajax({
+		type: 'POST',
+		url: 'saveMapGraph.php',
+		data: {'data': datums, 'map': map}
+	})
+	.done(function(data){
+		//Response
+		$('#debug').text(data);
+	})
+	.fail(function(){
+		//fail
+		$('#debug').text("Failer?");
+	});
+							
+	//window.location.href = "saveMapGraph.php?data=" + data.substring(0,data.length-1) + "&map="+map;
 }
 
 function findNeighbor(path, map){

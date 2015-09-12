@@ -15,7 +15,7 @@ if(filter_has_var(INPUT_POST, "username")){
 		$hash = password_hash($pass, PASSWORD_BCRYPT);
 		//the password_verify function can take the whole hash, so just save it as that.
 		//Hash already includes salt
-		$myQ = "INSERT INTO users (UserName,hash) VALUES ('".$userName."','".$hash."')";
+		$myQ = "INSERT INTO users (user_name,hash) VALUES ('".$userName."','".$hash."')";
 		$result = mysql_query($myQ, $connection) or die('query problem (submit register)'.' '.mysql_error);
 		
 		//For now, just see if everything worked
@@ -34,7 +34,7 @@ if(filter_has_var(INPUT_POST, "username")){
 
 function user_name_taken($usr, $connection){
 	//query DB
-	$myQ = "SELECT UserName FROM users WHERE UserName LIKE '".$usr."'";
+	$myQ = "SELECT user_name FROM users WHERE user_name LIKE '".$usr."'";
 	
 	//send query
 	$result = mysql_query($myQ, $connection) or die('query problem (register)'.' '.mysql_error);

@@ -24,7 +24,7 @@ HERE;
 	print <<<HERE
 	<div id="login">
 	User Name: {$_SESSION['UserName']} <hr>
-	<a href="ktr.php?content=logout"> Log Out </a>
+	<a href="ktr.php?action=logout"> Log Out </a>
 	</div>
 HERE;
 }
