@@ -4,13 +4,16 @@
 <script>
   $(document).ready(function(){
     $('#MyButton').click(function(){
-		var totalData = "";
-		//$('path').attr("transform: 'scale(1.1)'");
-       $('path').each(function(){
-		totalData = totalData.concat(collisionDetection($(this)));
-	   });
-	   console.log(totalData);
-	   submitData(totalData, document.URL.split('-')[1]);
+// 		 var totalData = "";
+// 		//$('path').attr("transform: 'scale(1.1)'");
+//        $('path').each(function(){
+// 		totalData = totalData.concat(collisionDetection($(this)));
+// 	   });
+// 	   console.log(totalData);
+// 	   submitData(totalData, document.URL.split('-')[1]);
+		//Get the selected Node
+		disconnectTile(start_sel,end_sel,document.URL.split('-')[1]);
+		//Get the Target Node
     });
   });
 </script>

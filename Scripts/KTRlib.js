@@ -1,5 +1,21 @@
 //KTR Javascript Library
 
+function disconnectTile(node1, node2, map){
+	$.ajax({
+		type: 'POST',
+		url: 'disconnectTiles.php',
+		data: {'node1':node1, 'node2':node2, 'map': map}
+	})
+	.done(function(data){
+		//Response
+		$('#debug').text(data);
+	})
+	.fail(function(){
+		//fail
+		$('#debug').text("Failer?");
+	});
+}
+
 function intersectRect(rect1, rect2){
 	var r1 = r1.getBoundingClientRect();    //BOUNDING BOX OF THE FIRST OBJECT
     var r2 = r2.getBoundingClientRect();    //BOUNDING BOX OF THE SECOND OBJECT

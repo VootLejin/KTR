@@ -7,6 +7,8 @@
 //Closed Set
 var selected = "none";
 var ActiveMap = [];
+var start_sel;
+var end_sel;
 populateGraph(document.URL.split('-')[1]);
 
 
@@ -23,8 +25,9 @@ $(document).ready(function(){
 			
 			//Find Start and end nodes
 			var strt = getNode(selected.attr('id').slice(4));
-			
+			start_sel = selected.attr('id').slice(4);
 			var nd = getNode($(this).attr('id').slice(4));
+			end_sel = $(this).attr('id').slice(4);
 			console.log("Second Selected ");
 			showPath(moveTo(strt,nd));
 			//Despecify neighbors to see path
@@ -40,8 +43,8 @@ $(document).ready(function(){
 
 function getNode(ref){
 		
-		for(var i = 0; i < ActiveMap.length; i++){
-			if(ActiveMap[i].ID ==ref){
+		for(var i = 0; i < ActiveMap.length; i++){//Cycle through map
+			if(ActiveMap[i].ID ==ref){//find node with that ID
 				
 				return ActiveMap[i];
 			} 
@@ -76,6 +79,7 @@ function populateGraph(mapName){
 		//Make Data
 		//Format NN EE EE EE ;...
 		var map = data;
+		console.log(map);
 		var start = 0;
 		var activeRec = "";
 		var done = false;
@@ -89,7 +93,7 @@ function populateGraph(mapName){
 				//get active node
 				var node = {ID: activeRec.substr(0,activeRec.indexOf(" ")), edges:[], dist:0, parent: null};
 				//activeRec = activeRec.substr(activeRec.indexOf(" "+1));//Eat node and advance
-				//console.log(activeRec);
+				console.log(activeRec);
 				//get edges for active node (Edges funtion as two node combo, XX YY)
 				while(activeRec.indexOf(" ")!=-1){
 					node.edges.push(activeRec.substr(0,activeRec.indexOf(" ")));
@@ -164,13 +168,15 @@ function moveTo(start, end){
 		
 		//generate neighbors
 		//console.log(activeNode);
-		var neighbors = activeNode.edges.slice();
+		var neighbors = activeNode.edges.slice(0);
 		//console.log("Edges: ", activeNode.edges);
 		
 		//console.log("neighbors ", neighbors);
 		//Move Neighbors to Open, if not closed
 		for(var j = 0; j<neighbors.length;j++){
 			var activeNeighbor=getNode(neighbors[j]);
+			console.log("NIL Call 1 . " + j + " : ", activeNeighbor);
+			console.log("NIL Neighbor: ", neighbors);
 			if(nodeInList(activeNeighbor,closed)){//If the node is not already in the closed list
 				//console.log("Node in closed: ", activeNeighbor);
 				continue;
@@ -185,6 +191,7 @@ function moveTo(start, end){
 				
 				var currentDistance = activeNode.dist+1;
 				var bestDistance = false;
+				console.log("NIL Call 2: ", activeNeighbor);
 				if(!nodeInList(activeNeighbor, open)){//if not already in open
 					bestDistance = true; //Its adjacent, so its score is best atm
 					open.push(activeNeighbor);
@@ -213,6 +220,10 @@ function moveTo(start, end){
 function nodeInList(node, list){
 	for(var i = 0; i<list.length;i++){
 		//Find node
+		console.log("listID: ", list[i].ID);
+		console.log("Node: ", node);
+		console.log("NodeID: ", node.ID);
+		
 		if(list[i].ID == node.ID){ //I hope Javascript doesn't do something weird
 			return true;
 		}
