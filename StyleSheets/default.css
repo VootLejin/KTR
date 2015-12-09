@@ -61,9 +61,12 @@ div#login {
 }
 
 path {fill: #808080; transition: .6s fill;
+	transform: scale(1);
 	}
-
-path:hover { fill: #249; !important;}
+path.selected { fill: #00FF00;}
+path.path{fill: #FF0000;}
+path.neighbor {fill: #FFFF00;}
+path:hover { fill: #249;} 
 .tooltip {
 	display:none;
 	position:absolute;

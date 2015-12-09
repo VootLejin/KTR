@@ -63,10 +63,11 @@ function lazyCheckAdjacent(r1, r2){
     var r2 = r2.getBoundingClientRect();    //BOUNDING BOX OF THE SECOND OBJECT
  
     //CHECK IF THE TWO BOUNDING BOXES OVERLAP
-  return !(r2.left > r1.right || 
-           r2.right < r1.left || 
-           r2.top > r1.bottom ||
-           r2.bottom < r1.top);
+    var fudge = 5 //10 is a little high but seems to get the job done
+  return !(r2.left-fudge > r1.right+fudge || 
+           r2.right+fudge < r1.left-fudge || 
+           r2.top-fudge > r1.bottom+fudge ||
+           r2.bottom+fudge < r1.top-fudge);
 }
 
 function collisionDetection(r1){

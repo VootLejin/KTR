@@ -5,6 +5,7 @@
   $(document).ready(function(){
     $('#MyButton').click(function(){
 		var totalData = "";
+		//$('path').attr("transform: 'scale(1.1)'");
        $('path').each(function(){
 		totalData = totalData.concat(collisionDetection($(this)));
 	   });

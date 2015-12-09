@@ -15,15 +15,25 @@ $(document).ready(function(){
 	$('path').click(function(){
 		//Check if something selected already
 		if(selected == "none"){
-			selected = $(this).attr('id').slice(4); //Designate Selected
+			selected = $(this); //Designate Selected
+			
+			$(this).addClass('selected');
+			$('path').removeClass('path');
 		} else { //we already have something selected
+			
 			//Find Start and end nodes
-			var strt = getNode(selected);
+			var strt = getNode(selected.attr('id').slice(4));
 			
 			var nd = getNode($(this).attr('id').slice(4));
 			console.log("Second Selected ");
 			showPath(moveTo(strt,nd));
-			selected = "none";
+			//Despecify neighbors to see path
+			$('path').removeClass('neighbor');
+			
+			//unselect node
+			//selected.removeClass('selected');
+			selected = "deselect";
+			
 		}
 	})
 })
@@ -41,6 +51,12 @@ function getNode(ref){
 function showPath(path){
 	//for now just put in console
 	console.info("Path: ", path);
+	//Highlight path in red
+	for(var i = 0; i < path.length;	i++){
+		//find the "path" object in the svg
+		$('path#path'+path[i].ID).addClass('path');//Fill path with red
+		
+	}
 }
 
 

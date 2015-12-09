@@ -36,7 +36,9 @@
 						for (var i = 0; i < parsed.length; i++ ){
 							//console.log(parsed[i]);
 							//console.log($('path#path'+parsed[i]));
-							$('path#path'+parsed[i]).css('fill','#FFFF00');
+							//$('path#path'+parsed[i]+'').css('fill','#FFFF00');//Fill Neighbors with yellow
+							$('path#path'+parsed[i]).not($('.selected')).addClass('neighbor');
+							//$('.neighbor').css('fill', '#FF00FF');
 							$('#debug').text(parsed[i]);
 						}
 						//Should do some local caching probably
@@ -51,7 +53,15 @@
 				//$(this).attr('title', $(this).data('tipText'));
 				$('.tooltip').remove();
 				//$(this).css("fill", 'red');
-				$('path').css("fill", '');
+				//Refine this to only paint certain ones
+				$('path').removeClass("neighbor");
+				//Removes selected from classes on hover out
+				if(selected == "deselect"){
+					$('path').removeClass("selected");
+					selected = "none";
+				}
+				
+				//$('path[fill!=#00FF00]').css("fill",'');
 		}).mousemove(function(e) {
         var mousex = e.pageX + 20; //Get X coordinates
         var mousey = e.pageY + 10; //Get Y coordinates
