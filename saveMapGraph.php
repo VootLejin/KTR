@@ -1,13 +1,13 @@
 <?php
 	$response ="";
-	if (filter_has_var(INPUT_GET, "map")){
+	if (filter_has_var(INPUT_POST, "map")){
 	
 	$connection = mysql_connect("localhost","kguest","butts") or die(mysql_error);
 	mysql_select_db("ktr", $connection);
 	
 	
 		//get Vars
-		$mapname=mysql_real_escape_string(filter_input(INPUT_GET, "map"));
+		$mapname=mysql_real_escape_string(filter_input(INPUT_POST, "map"));
 		//Make Table
 		$myQ = <<<HERE
 		CREATE TABLE $mapname (
@@ -19,7 +19,7 @@ HERE;
 		mysql_query($myQ, $connection)or die('query problem (map)'.' '.mysql_error());
 		
 		//Data time
-		$rawdata = mysql_real_escape_string(filter_input(INPUT_GET, "data"));
+		$rawdata = mysql_real_escape_string(filter_input(INPUT_POST, "data"));
 		$datums = explode(";", $rawdata);
 		foreach($datums as $fullLine){
 			$edges = explode(" ", $fullLine);

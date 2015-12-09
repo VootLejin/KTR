@@ -1,4 +1,4 @@
-<?php 
+<?php session_start();
   //Simple CMS
   //Extremely Simple CMS system
   //Andy Harris for PHP/MySQL Adv. Beg 2nd Ed.
@@ -16,9 +16,30 @@
   } else {
     $content = "default";
   } // end if
+  
+  //Load Libraries
   include ("start.html");
-  include ("header.php");
-
+  
+  //check for UserLogin actions
+  if (filter_has_var(INPUT_GET, "action")){
+	if(filter_input(INPUT_GET, "action")=="logout"){
+		//logout
+		$_SESSION = array();//Unset all session variables
+		
+		//Kill Sesion and delete session cookie
+		if (ini_get("session.use_cookies")) {
+			$params = session_get_cookie_params();
+			setcookie(session_name(), '', time() - 42000,
+				$params["path"], $params["domain"],
+				$params["secure"], $params["httponly"]);
+		}
+	//destroy Session
+	session_destroy();
+	include ("header.php");
+	}
+  } else {
+	include ("header.php");
+  }
   //print "<div class = \"menuPanel\"> \n";
   include ($menu);
   //print "</div> \n";
@@ -28,7 +49,7 @@
   //include ($content);
   print "</div> \n";
   include ("./Scripts/InfoFloater.html");
-  //include("./Scripts/CollideButton.html");//tears
+  include("./Scripts/CollideButton.html");//tears
 	//Add after admin stuff is working
 		include("debug.html");
 	function makeContent($cont){
@@ -44,6 +65,7 @@
 			include ("contentMaker.php");
 			//include("aus.html");
 			print(makeMapPage($cont));
+			include("./Scripts/Pathfinding.html");
 		} else if ($cont=="todo"){
 			include("todo.html");
 		} else if ($cont=="login"){

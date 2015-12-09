@@ -1,0 +1,207 @@
+<script type="text/javascript">
+//Path Finding
+
+//Computer F(n)
+//f = g + h
+//Open set
+//Closed Set
+var selected = "none";
+var ActiveMap = [];
+populateGraph(document.URL.split('-')[1]);
+
+
+$(document).ready(function(){
+	//Pathing
+	$('path').click(function(){
+		//Check if something selected already
+		if(selected == "none"){
+			selected = $(this).attr('id').slice(4); //Designate Selected
+		} else { //we already have something selected
+			//Find Start and end nodes
+			var strt = getNode(selected);
+			
+			var nd = getNode($(this).attr('id').slice(4));
+			console.log("Second Selected ");
+			showPath(moveTo(strt,nd));
+			selected = "none";
+		}
+	})
+})
+
+function getNode(ref){
+		
+		for(var i = 0; i < ActiveMap.length; i++){
+			if(ActiveMap[i].ID ==ref){
+				
+				return ActiveMap[i];
+			} 
+		}
+}
+
+function showPath(path){
+	//for now just put in console
+	console.info("Path: ", path);
+}
+
+
+//Get info from DB
+function populateGraph(mapName){
+	var response = "";
+	console.log("populating");
+	$.ajax({
+		type: 'POST',
+		url: 'getMap.php',
+		data: {'map': mapName}
+	})
+	.done(function(data){
+		//Response
+		//$('#debug').text(data);
+		//console.log(data);
+		//Make Data
+		//Format NN EE EE EE ;...
+		var map = data;
+		var start = 0;
+		var activeRec = "";
+		var done = false;
+		while(!done){
+			var SemiPos = map.indexOf(";");
+			if(SemiPos == -1){//No more Records
+				done = true;
+			} else {
+				activeRec = map.substr(0, SemiPos);//Make the current record
+				
+				//get active node
+				var node = {ID: activeRec.substr(0,activeRec.indexOf(" ")), edges:[], dist:0, parent: null};
+				//activeRec = activeRec.substr(activeRec.indexOf(" "+1));//Eat node and advance
+				//console.log(activeRec);
+				//get edges for active node (Edges funtion as two node combo, XX YY)
+				while(activeRec.indexOf(" ")!=-1){
+					node.edges.push(activeRec.substr(0,activeRec.indexOf(" ")));
+					activeRec = activeRec.substr(activeRec.indexOf(" ")+1);
+				}
+			}
+			//break up map
+			map=map.substr(SemiPos+1);
+			//add node
+			ActiveMap.push(node);
+		}
+	})
+	.fail(function(){
+		//fail
+		$('#debug').text("Failer? on pupulate Graph");
+	});
+}
+
+function moveTo(start, end){
+	//We have start ID and End ID
+	//var lowTime = 100;
+	var open = [];
+	var closed = [];
+	open.push(start);
+	
+	var activeNode = start;
+	var pass = 0;
+	while(open.length > 0 ){//For every node in open
+		//Check distance to exit
+		
+		
+		
+		var closestNode = open[0];
+		for(var i = 0; i < open.length; i++){
+			if(open[i].dist < closestNode.dist){
+				closestNode = open[i];
+			}
+		}
+		
+		activeNode = closestNode;
+		
+		//Found it
+		if(activeNode == end){
+			var current = activeNode;
+			var path = [];
+			//console.log("found?: ", current);
+			//console.log("Parent?" , current.parent);
+			while(current.parent){
+				path.push(current);
+				//console.log("finding current :", current);
+				//console.log("current.parent : ",current.parent);
+				current = current.parent;
+				
+			}
+			console.log("Path Found");
+			return path.reverse();
+		}
+		//Searching ... Move active from open to closed
+		//remove active from open
+		for(var j = 0; j<open.length;j++){//remove active from open
+			//console.log("in removal loop");
+			if(open[j].ID == activeNode.ID){ //remove from open if
+					open.splice(j,1);
+					//console.log("cleaned open: ");
+			}
+		}
+	
+		//console.log("activeNode: ", activeNode);
+		closed.push(activeNode);
+		//console.log("closed: ", closed);
+		//console.log("Activenode edges: ", activeNode.edges);
+		
+		//generate neighbors
+		//console.log(activeNode);
+		var neighbors = activeNode.edges.slice();
+		//console.log("Edges: ", activeNode.edges);
+		
+		//console.log("neighbors ", neighbors);
+		//Move Neighbors to Open, if not closed
+		for(var j = 0; j<neighbors.length;j++){
+			var activeNeighbor=getNode(neighbors[j]);
+			if(nodeInList(activeNeighbor,closed)){//If the node is not already in the closed list
+				//console.log("Node in closed: ", activeNeighbor);
+				continue;
+			} else {
+				if(activeNeighbor.ID == activeNode.ID){//If they are the same tile
+					activeNeighbor = getNode(neighbors[j+1]);//This bugger
+				} 					
+				
+				//console.log("active Neighbor: ", activeNeighbor);
+				//console.log("activeNeighbor Dist: ", activeNeighbor.dist);
+				
+				
+				var currentDistance = activeNode.dist+1;
+				var bestDistance = false;
+				if(!nodeInList(activeNeighbor, open)){//if not already in open
+					bestDistance = true; //Its adjacent, so its score is best atm
+					open.push(activeNeighbor);
+				} else if(currentDistance < activeNeighbor.dist){//if current distance better then neighbor distance
+				//then best distance
+					bestDistance = true;
+				}
+				if(bestDistance){
+					//If we've found a best path
+					activeNeighbor.parent = activeNode;
+					activeNeighbor.dist = currentDistance;
+				}
+			}
+			
+		}
+		//console.log(open);
+		//console.log(open.length);
+		
+		//if(pass>5){return[];}
+	}
+	//No path found
+	console.log("No Path Found");
+	return [];
+	
+}
+function nodeInList(node, list){
+	for(var i = 0; i<list.length;i++){
+		//Find node
+		if(list[i].ID == node.ID){ //I hope Javascript doesn't do something weird
+			return true;
+		}
+		
+	}
+	return false;
+}
+</script>>
