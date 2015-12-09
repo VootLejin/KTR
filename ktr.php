@@ -65,6 +65,7 @@
 			include ("contentMaker.php");
 			//include("aus.html");
 			print(makeMapPage($cont));
+			include("./Scripts/Pathfinding.html");
 		} else if ($cont=="todo"){
 			include("todo.html");
 		} else if ($cont=="login"){
